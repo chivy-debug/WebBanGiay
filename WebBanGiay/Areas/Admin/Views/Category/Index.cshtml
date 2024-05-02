@@ -1,0 +1,43 @@
+﻿@model IEnumerable<WebBanGiay.Models.Category>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<h2>Categories</h2>
+<a href="/admin/category/add" class="btn btn-primary">Thêm danh mục</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.Name</td>
+
+                <td>
+                    <a href="/admin/category/details/@category.Id" class="btn btn-outline-danger">Details</a>
+                    <a href="/admin/category/edit/@category.Id" class="btn btn-outline-danger">Edit</a>
+                    <button type="button" class="btn btn-outline-danger" onclick="confirmDelete('@category.Id')">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        function confirmDelete(categoryId) {
+            if (confirm('Xác nhận xóa sản phẩm này?')) {
+                window.location.href = '/Admin/category/delete/' + categoryId;
+            }
+        }
+    </script>
+}

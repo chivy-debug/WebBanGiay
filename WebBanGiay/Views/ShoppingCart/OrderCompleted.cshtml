@@ -1,0 +1,44 @@
+﻿@model WebBanGiay.Models.Order
+
+<input type="hidden" id="totalPriceHiddenField" value="@Model.TotalPrice" /> @* Giá trị totalPrice đã tính ở Index *@
+
+
+<h2>Đơn hàng của bạn đã được đặt. Vui lòng nhập họ tên và chọn phương thức thanh toán.</h2>
+
+<div class="container">
+    <form action="/Momo/CreatePaymentUrl" method="POST">
+        <div class="form-group">
+            <label for="FullName">Tên khách hàng</label>
+            <input class="form-control"
+                   id="FullName"
+                   name="FullName"
+                   type="text"
+                   value=""
+                   required> <!-- Thêm thuộc tính required ở đây -->
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="Amount">Số tiền</label>
+            <input class="form-control"
+                   id="Amount"
+                   name="Amount"
+                   type="text"
+                   value="@Model.TotalPrice">
+        </div>
+        <br />
+        <div class="form-group">
+            <label for="OrderInfo">Nội dung thanh toán</label>
+            <textarea class="form-control"
+                      cols="20"
+                      id="OrderInfo"
+                      name="OrderInfo"
+                      rows="2"></textarea>
+        </div>
+        <br />
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary">Thanh toán bằng Momo</button>
+            <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Thanh toán khi nhận hàng</a>
+        </div>
+
+    </form>
+</div>

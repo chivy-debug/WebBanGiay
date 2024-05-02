@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebBanGiay.Models.Order>
+@{
+    ViewData["Title"] = "OrderList";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Lịch sử các đơn hàng</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Ngày</th>
+                <th>Tổng tiền</th>
+                <th>Địa chỉ</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.User.UserName</td> <!-- Hiển thị UserName của người dùng -->
+                    <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                    <td>@order.TotalPrice.ToString("N0")VND</td>
+                    <td>@order.ShippingAddress</td>
+                    <td>@order.Notes</td>
+                    <td>
+                        <!-- Link đến trang chi tiết đơn hàng -->
+                        <a href="/Admin/Account/OrderDetails?orderId=@order.Id" class="btn btn-outline-primary">Details</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p><strong>Tổng doanh thu:</strong> @ViewBag.TongDoanhThu.ToString("N0") VND</p>
+
+}
+else
+{
+    <p>@ViewBag.Message</p>
+}
+

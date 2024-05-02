@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - VKATSneaker</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebBanGiay.styles.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/9d49fa6fd3.js" crossorigin="anonymous"></script>
+   
+    <link rel="stylesheet" href="~/css/styles.css" />
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa-solid fa-shop fa-xl"></i> VKATSneaker</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LienHe"><i class="fa-solid fa-phone fa-lg"></i> Liên hệ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="HoTro"><i class="fa-solid fa-envelope fa-lg"></i> Hỗ trợ</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/admin/product">Admin</a>
+                                </li>
+                            }
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Employee"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="/Employee/product">Employee</a>
+                                </li>
+                            }
+                        }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Danh mục</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @if (ViewBag.Categories != null)
+                                {
+                                    @foreach (var category in ViewBag.Categories)
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("SanPhamTheoCategory", "Home", new { categoryId = category.Id })">@category.Name</a>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="dropdown-item disabled">Không có danh mục</span>
+                                }
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Nút tìm kiếm -->
+                    @* Search bar *@
+                    <form class="d-flex" asp-controller="Home" asp-action="Index" method="get" style="width: 400px;">
+                        <input id="txtSearchPlaceholder" class="form-control me-2" type="search" name="searchString" style="position:absolute; background-color: transparent; color: #ccc; z-index: -1; width:100%;" disabled />
+                        <input id="txtSearch" class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" name="searchString">
+                        <button class="btn btn-outline-dark" type="submit">
+                             <i class="fa-solid fa-magnifying-glass fa-lg"></i> 
+                        </button>
+                    </form>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark logo" asp-area="" asp-controller="ShoppingCart" asp-action="Index">
+                            <i class="fa-solid fa-cart-shopping fa-2xl"></i>
+                        </a>
+                    </li>
+
+                    <partial name="_LoginPartial" />
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <div class="container body-content">
+        <hr> <!-- Hàng kẻ ngang -->
+            @await Html.PartialAsync("_Footer")
+        <div class="col-md-12">
+            <!-- Đoạn mã iframe -->
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1647.4958000049492!2d106.78451288004783!3d10.85505699455519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175276e7ea103df%3A0xb6cf10bb7d719327!2zSFVURUNIIC0gxJDhuqFpIGjhu41jIEPDtG5nIG5naOG7hyBUUC5IQ00gKFRodSBEdWMgQ2FtcHVzKQ!5e0!3m2!1svi!2s!4v1712667175017!5m2!1svi!2s" width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+</html>
+<!-- thư viện jQuery UI Autocomplete -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- thư viện jQuery UI Autocomplete -->
+<script>
+    $(function () {
+        $("#txtSearch").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("AutoComplete", "Home")',
+                    type: "POST",
+                    dataType: "json",
+                    data: { search: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.label, value: item.value };
+                        }));
+                    }
+                });
+            },
+            minLength: 1
+        }).keydown(function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB && $("#txtSearchPlaceholder").val() !== '') {
+                event.preventDefault();
+                $(this).val($("#txtSearchPlaceholder").val());
+                $("#txtSearchPlaceholder").val('');
+            }
+        });
+    });
+</script>
+<style>
+    /* Add your custom CSS here */
+    .navbar-brand {
+        font-weight: bold;
+    }
+
+    .navbar-nav .nav-link {
+        font-weight: bold;
+    }
+
+        .navbar-nav .nav-link:hover {
+            color: #007bff;
+        }
+
+    .dropdown-menu {
+        background-color: #f8f9fa;
+    }
+
+    .dropdown-item:hover {
+        background-color: #e9ecef;
+    }
+
+    .form-control {
+        width: 300px;
+    }
+
+
+</style>
+

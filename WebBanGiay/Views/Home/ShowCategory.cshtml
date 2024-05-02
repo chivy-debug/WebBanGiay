@@ -1,0 +1,8 @@
+﻿@model IEnumerable<WebBanGiay.Models.Category>
+
+<div class="text-links categories-content metro-dropdown-menu; level-0 bold2 list-group">
+    @foreach (var item in Model)
+    {
+        <a style="color:#087BB0" href="/Home/SanPhammTheoCategory/@item.Id" class="list-group-item list-group-item-action">@item.Id</a>
+    }
+</div>

@@ -1,0 +1,19 @@
+﻿@model WebBanGiay.Models.Category
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h2>Category Details</h2>
+
+<div>
+    <h4>Name: @Model.Name</h4>
+</div>
+
+<div>
+    <a href="/admin/category/edit/@Model.Id">Edit</a> |
+    <a href="/admin/category/delete/@Model.Id">Delete</a>
+</div>
+
+

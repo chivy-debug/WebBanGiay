@@ -1,0 +1,67 @@
+﻿@model IEnumerable<WebBanGiay.Models.UserWithRolesModel>
+@{
+    ViewData["Title"] = "";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <hr />
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            Không có người dùng nào.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">Vai trò</th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Email</td>
+                            <td>
+                                @foreach (var role in user.Roles)
+                                {
+                                    <span class="badge bg-primary">@role</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a href="/Admin/Account/edit/@user.UserId" class="btn btn-outline-primary">Chỉnh sửa</a>
+                                    <button type="button" class="btn btn-outline-danger" onclick="confirmDelete('@user.UserId')">Xoá</button>
+                                </div>
+                                <form id="deleteForm_@user.UserId" action="/Admin/Account/Delete" method="post" style="display: none;">
+                                    <input type="hidden" name="id" value="@user.UserId" />
+                                    @Html.AntiForgeryToken()
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <div>
+        <a href="/Identity/Account/Register" class="btn btn-primary">Đăng ký tài khoản</a>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(userId) {
+        if (confirm("Bạn có chắc chắn muốn xoá tài khoản người dùng này không?")) {
+            document.getElementById("deleteForm_" + userId).submit();
+        }
+    }
+</script>

@@ -1,0 +1,71 @@
+﻿@model WebBanGiay.Models.ShoppingCart
+
+<h2 class="my-4">Giỏ hàng của bạn</h2>
+
+@if (Model.Items != null && Model.Items.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Sản phẩm</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Giá</th>
+                    <th scope="col">Tạm tính</th>
+                    <th scope="col">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            <form asp-controller="ShoppingCart" asp-action="UpdateQuantity" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control" />
+                                <button type="submit" class="btn btn-info btn-sm mt-1">Cập nhật</button>
+                            </form>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Size)</td>
+                        <td>@item.Price.ToString("N0")VND</td>
+                        <td>@((item.Price * (item.Quantity)).ToString("N0"))VND</td>
+                        <td>
+                            <a asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" class="btn btn-danger btn-sm">Xóa</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row justify-content-between mt-4">
+        <div class="col-md-6">
+            @{
+                decimal totalPrice = 0;
+                foreach (var item in Model.Items)
+                {
+                    totalPrice += item.Quantity * item.Price;
+                }
+            }
+            <p><strong>Tổng thành tiền:</strong> @totalPrice.ToString("N0") VND</p>
+            <input type="hidden" id="totalPriceHiddenField" value="@totalPrice" />
+        </div>
+        <div class="col-md-6 text-right">
+            <a asp-action="Checkout" asp-controller="ShoppingCart" class="btn btn-success">Tiến hành đặt hàng</a>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Trở về trang chủ</a>
+            <a asp-action="OrderList" asp-controller="ShoppingCart" class="btn btn-info">Đơn hàng của bạn</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        <strong>Giỏ hàng của bạn trống.</strong> Hãy chọn những sản phẩm mà bạn muốn mua.
+    </div>
+    <div class="mt-4">
+        <a asp-action="Index" asp-controller="Home" class="btn btn-primary">Trở về trang chủ</a>
+        <a asp-action="OrderList" asp-controller="ShoppingCart" class="btn btn-info">Đơn hàng của bạn đã mua</a>
+    </div>
+}

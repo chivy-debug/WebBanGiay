@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WebBanGiay.Models.Product>
+@using X.PagedList.Mvc.Core
+@using X.PagedList;
+@{
+    ViewData["Title"] = "";
+    Layout = "~/Areas/Employee/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+
+<div class="container">
+    <!-- Nút tìm kiếm -->
+    <form class="d-flex" action="Product/Index" method="get" >
+        <input id="txtSearchPlaceholder" class="form-control me-2" type="search" name="searchString" style="position:absolute; background-color: transparent; color: #ccc; z-index: -1; width:100%;" disabled />
+        <input id="txtSearch" class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search" name="searchString">
+        <button class="btn btn-outline-dark" type="submit">
+            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+        </button>
+    </form>
+
+    <!-- Add Product Button -->
+    <p>
+    <a href="/Employee/product/add" class="btn btn-primary mb-4">Thêm sản phẩm</a>
+    </p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Category</th>
+                <th scope="col">Image</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price.ToString("N0")VND</td>
+                    <td>@(product.Category != null ? product.Category.Name : "No Category")</td>
+                    <td><img src="@product.ImageUrl" alt="Product Image" style="max-width: 100px;" /></td>
+                    <td>
+                        <a href="/Employee/product/update/@product.Id" class="btn btn-outline-danger">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center">
+        @Html.PagedListPager(
+                 // Dữ liệu được phân trang (một đối tượng IPagedList)
+                 (IPagedList)Model,
+
+                 // Lambda expression tạo URL cho mỗi trang
+                 page => Url.Action("Product", "Employee", new { page = page }),
+
+                 // Tùy chọn tùy chỉnh giao diện của thanh phân trang
+                 new X.PagedList.Web.Common.PagedListRenderOptions
+        {
+            // Đặt lớp CSS của các phần tử <li> trong thanh phân trang
+            LiElementClasses = new string[] { "page-item" },
+
+            // Đặt lớp CSS của các phần tử <a> trong thanh phân trang
+            PageClasses = new string[] { "page-link" }
+        })
+    </div>
+</div>

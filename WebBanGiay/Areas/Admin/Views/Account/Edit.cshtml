@@ -1,0 +1,31 @@
+﻿@model EditUserModel
+@{
+    ViewData["Title"] = "Chỉnh sửa gmail và vai trò người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<form action="Edit" method="post" id="editForm">
+    <input type="hidden" asp-for="UserId" />
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" id="emailInput" readonly/>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <span id="emailExistsError" class="text-danger" style="display: none;">Email đã tồn tại, vui lòng chọn email khác.</span>
+    </div>
+
+    <div class="form-group">
+        <label>Select Role:</label>
+        @foreach (var role in Model.AllRoles)
+        {
+            <div>
+                <input type="radio" name="Roles" value="@role" @(Model.Roles.Contains(role) ? "checked" : "") />
+                <label>@role</label>
+            </div>
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu lại</button>
+</form>

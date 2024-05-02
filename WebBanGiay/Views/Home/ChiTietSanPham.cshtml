@@ -1,0 +1,94 @@
+﻿@model WebBanGiay.Models.Product
+
+
+
+<div class="product-details-container">
+    <div class="product-image-container">
+        <img src="@Model.ImageUrl" alt="@Model.Name" class="product-image">
+    </div>
+    <div class="product-info-container">
+        <h2>@Model.Name</h2>
+        <p class="product-description">@Model.Description</p>
+        <hr>
+        <h3 class="product-price">Giá: @Model.Price.ToString("N0") VND</h3>
+        <div class="size-buttons">
+            <button type="button" class="btn btn-secondary size-button" data-size="36">36</button>
+            <button type="button" class="btn btn-secondary size-button" data-size="37">37</button>
+            <button type="button" class="btn btn-secondary size-button" data-size="38">38</button>
+            <button type="button" class="btn btn-secondary size-button" data-size="39">39</button>
+            <button type="button" class="btn btn-secondary size-button" data-size="40">40</button>
+            <button type="button" class="btn btn-secondary size-button" data-size="41">41</button>
+            <button type="button" class="btn btn-secondary size-button" data-size="42">42</button>
+            <button type="button" class="btn btn-secondary size-button" data-size="43">43</button>
+            <button type="button" class="btn btn-secondary size-button" data-size="44">44</button>
+        </div>
+        <form method="post" action="@Url.Action("AddToCart", "ShoppingCart")" class="add-to-cart-form">
+            <input type="hidden" name="productId" value="@Model.Id" />
+            <input type="hidden" name="Size" id="selectedSize" value="36" />
+            <input type="number" name="quantity" value="1" min="1" class="quantity-input" />
+            <button type="submit" class="btn btn-primary add-to-cart-button">Thêm vào giỏ hàng</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    // Lắng nghe sự kiện click trên các nút chọn size
+    document.querySelectorAll('.size-button').forEach(button => {
+        button.addEventListener('click', function () {
+            const selectedSize = this.getAttribute('data-size'); // Lấy giá trị size từ data-size của nút
+            document.getElementById('selectedSize').value = selectedSize; // Cập nhật giá trị Size trong trường ẩn
+            // Cập nhật văn bản của nút dropdown để hiển thị size đã chọn (nếu cần)
+            // Ví dụ: document.getElementById('dropdownText').innerText = 'Size ' + selectedSize;
+        });
+    });
+</script>
+<style>
+    .product-details-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .product-image-container {
+        flex: 0 0 40%;
+        margin-right: 20px;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-info-container {
+        flex: 0 0 60%;
+    }
+
+    .product-description {
+        font-size: 16px;
+    }
+
+    .product-price {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .size-buttons {
+        margin-top: 20px;
+    }
+
+    .size-button {
+        margin-right: 5px;
+    }
+
+    .add-to-cart-form {
+        margin-top: 20px;
+    }
+
+    .quantity-input {
+        width: 70px;
+    }
+
+    .add-to-cart-button {
+        margin-left: 10px;
+    }
+</style>

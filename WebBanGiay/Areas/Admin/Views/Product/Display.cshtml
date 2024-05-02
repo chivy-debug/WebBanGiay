@@ -1,0 +1,71 @@
+﻿@model WebBanGiay.Models.Product
+@{
+    ViewData["Title"] = "Display";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="product-details-container">
+    <div class="product-image-container">
+        <img src="@Model.ImageUrl" alt="@Model.Name" class="product-image">
+    </div>
+    <div class="product-info-container">
+        <h2>@Model.Name</h2>
+        <p class="product-description">@Model.Description</p>
+        <hr>
+        <h3 class="product-price">Giá: @Model.Price.ToString("N0") VND</h3>
+        
+    </div>
+</div>
+<a href="/admin/product" class="btn btn-outline-dark">Back to List</a>
+
+<style>
+    .product-details-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .product-image-container {
+        flex: 0 0 40%;
+        margin-right: 20px;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+    }
+
+    .product-info-container {
+        flex: 0 0 60%;
+    }
+
+    .product-description {
+        font-size: 16px;
+    }
+
+    .product-price {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .size-buttons {
+        margin-top: 20px;
+    }
+
+    .size-button {
+        margin-right: 5px;
+    }
+
+    .add-to-cart-form {
+        margin-top: 20px;
+    }
+
+    .quantity-input {
+        width: 70px;
+    }
+
+    .add-to-cart-button {
+        margin-left: 10px;
+    }
+</style>
+
+

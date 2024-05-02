@@ -1,0 +1,33 @@
+﻿@model WebBanGiay.Models.Order
+@{
+    ViewData["Title"] = "OrderDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sản phẩm</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detail in Model.OrderDetails)
+        {
+            <tr>
+                <td>@detail.Product.Name</td>
+                <td>@detail.Quantity</td>
+                <td>@detail.Price.ToString("N0")VND</td>
+                <td>@((detail.Price * (detail.Quantity)).ToString("N0"))VND</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <h3>Total: @Model.TotalPrice.ToString("C")</h3>
+</div>
+

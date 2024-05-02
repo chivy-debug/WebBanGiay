@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebBanGiay.Models.Product>
+
+<div class="container">
+    <h2 class="title">Danh sách sản phẩm</h2>
+    <div class="row row-cols-3 g-3">
+        @foreach (var product in Model)
+        {
+            <div class="col mb-3">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        <img src="@product.ImageUrl" alt="@product.Name" class="product-image" style="cursor: pointer;" onclick="redirectToProductDetails(@product.Id)">
+
+                        <!-- Sử dụng java để chuyển hướng vào trang Chi tiết mà không ảnh hưởng đến tỉ lệ hình ảnh -->
+                        <script>
+                            function redirectToProductDetails(productId) {
+                                window.location.href = "@Url.Action("ChiTietSanPham", "Home")" + "?id=" + productId;
+                            }
+                        </script>
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                    <div class="card-body">
+                        <h4 class="card-title">@product.Name</h4>
+                        <p class="card-text">@product.Price.ToString("N0")VND</p>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                        </div>
+                        <a href="@Url.Action("ChiTietSanPham", "Home", new { id = product.Id })" class="btn btn-primary">Mua hàng</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<style>
+    .rating .fa-star {
+        color: gold; /* Màu vàng */
+    }
+</style>

@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Hỗ Trợ</title>
+    <!-- Add your CSS stylesheets here -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for form */
+        .contact-form {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+            .contact-form h2 {
+                text-align: center;
+                margin-bottom: 30px;
+                font-weight: bold;
+                color: #333;
+            }
+
+            .contact-form .form-control {
+                border-radius: 25px;
+            }
+
+            .contact-form .btn-primary {
+                border-radius: 25px;
+            }
+
+                .contact-form .btn-primary:hover {
+                    background-color: #333;
+                }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form">
+                    <h2>Hỗ trợ</h2>
+                    <div class="form-group">
+                        <p>Để được hỗ trợ, vui lòng nhập thông tin bên dưới và ấn Gửi. Team VKATSneaker sẽ trả lời quí khách qua email trong vòng 24h.</p>
+                    </div>
+
+                    <form id="SupportForm" action="SendMessage" method="post">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" placeholder="Tên" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" name="message" rows="5" placeholder="Nội dung"></textarea>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Gửi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Lấy giá trị email từ form và gán vào mail.From
+        $(document).ready(function () {
+            $('#SupportForm').submit(function (event) {
+                // Ngăn chặn sự kiện mặc định của form
+                event.preventDefault();
+                // Lấy giá trị email từ input
+                var email = $('#email').val();
+                // Gán giá trị email vào mail.From
+                $('input[name="email"]').val(email);
+                // Submit form
+                this.submit();
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+﻿@model WebBanGiay.Models.Product
+@{
+    ViewData["Title"] = "Display";
+    Layout = "~/Areas/Employee/Views/Shared/_LayoutEmployee.cshtml";
+}
+
+<h2>@Model.Name</h2>
+<div>
+    <h3>Price: @Model.Price</h3>
+    <p>@Model.Description</p>
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <img src="@Model.ImageUrl" alt="Product Image" style="max-width:200px;" />
+    }
+</div>
+<a ref="/Employee/product">Back to List</a>
+<h1>Display</h1>
+
